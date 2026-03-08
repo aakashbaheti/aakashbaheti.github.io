@@ -227,6 +227,8 @@
 
 		section {
 			scroll-margin-top: 90px;
+			perspective: 1400px;
+			transform-style: preserve-3d;
 		}
 
 		.hero {
@@ -244,6 +246,7 @@
 			gap: 40px;
 			grid-template-columns: 0.9fr 1.1fr;
 			align-items: center;
+			transform-style: preserve-3d;
 		}
 
 		.hero-text h1 {
@@ -253,6 +256,12 @@
 			font-weight: 800;
 			letter-spacing: -0.02em;
 			max-width: 730px;
+		}
+
+		.hero-text,
+		.hero-photo {
+			will-change: transform;
+			transform-style: preserve-3d;
 		}
 
 		.hero-text .lead {
@@ -594,16 +603,35 @@
 			text-decoration: none;
 			color: #fff;
 			transform-style: preserve-3d;
-			transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+			--card-rx: 0deg;
+			--card-ry: 0deg;
+			--card-z: 0px;
+			--card-gx: 50%;
+			--card-gy: 50%;
+			transform: perspective(1200px) rotateX(var(--card-rx)) rotateY(var(--card-ry)) translateZ(var(--card-z));
+			transition: transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.22s ease, box-shadow 0.22s ease;
 			cursor: pointer;
 		}
 
+		.work-card::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(circle at var(--card-gx) var(--card-gy), rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 55%);
+			opacity: 0;
+			transition: opacity 0.22s ease;
+			pointer-events: none;
+		}
+
 		.work-card:hover {
-			transform: perspective(1200px) rotateX(8deg) rotateY(-8deg) translateZ(20px);
 			box-shadow: 
 				0 10px 30px rgba(241, 48, 36, 0.2),
 				0 30px 60px rgba(0, 0, 0, 0.4);
 			border-color: rgba(241, 48, 36, 0.5);
+		}
+
+		.work-card:hover::after {
+			opacity: 1;
 		}
 
 		.work-card img {
@@ -626,6 +654,33 @@
 			justify-content: flex-end;
 			padding: 14px;
 			background: linear-gradient(185deg, rgba(0, 0, 0, 0.05) 35%, rgba(19, 20, 36, 0.92));
+		}
+
+		.work-overlay,
+		.work-overlay h3,
+		.work-overlay p {
+			transform: translateZ(26px);
+		}
+
+		.js-effects-enabled section:not(.hero) .section-wrap {
+			opacity: 0;
+			transform: translateY(34px) rotateX(10deg) scale(0.97);
+			transform-origin: top center;
+			filter: blur(3px);
+			transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.75s ease, filter 0.75s ease;
+		}
+
+		.js-effects-enabled section.in-view:not(.hero) .section-wrap {
+			opacity: 1;
+			filter: blur(0);
+		}
+
+		.js-effects-enabled section.in-view:nth-of-type(odd):not(.hero) .section-wrap {
+			transform: translateY(0) rotateX(0deg) rotateY(1deg) scale(1);
+		}
+
+		.js-effects-enabled section.in-view:nth-of-type(even):not(.hero) .section-wrap {
+			transform: translateY(0) rotateX(0deg) rotateY(-1deg) scale(1);
 		}
 
 		.work-overlay h3 {
@@ -902,6 +957,12 @@
 			body {
 				animation: none;
 			}
+			.hero-text,
+			.hero-photo,
+			.work-card,
+			.js-effects-enabled section .section-wrap {
+				transform: none !important;
+			}
 			* {
 				animation-duration: 0.01ms !important;
 				animation-iteration-count: 1 !important;
@@ -931,6 +992,16 @@
 			.side-nav {
 				display: none;
 			}
+
+			.work-card {
+				transform: none;
+			}
+
+			.js-effects-enabled section .section-wrap {
+				opacity: 1;
+				filter: none;
+				transform: none;
+			}
 		}
 
 		@media (max-width: 640px) {
@@ -940,7 +1011,21 @@
 			}
 
 			.nav-inline {
-				gap: 12px;
+				gap: 10px;
+				flex-wrap: nowrap;
+				overflow-x: auto;
+				width: 100%;
+				padding-bottom: 4px;
+				scrollbar-width: none;
+			}
+
+			.nav-inline::-webkit-scrollbar {
+				display: none;
+			}
+
+			.nav-inline a {
+				white-space: nowrap;
+				font-size: 0.88rem;
 			}
 
 			.stats {
@@ -1031,9 +1116,6 @@
 				<div class="section-wrap">
 					<div class="section-head reveal">
 						<h2>About <span class="accent">Me</span></h2>
-						<p>
-							Based in Seattle, WA, I'm passionate about learning and building at the intersection of software engineering and data science.
-						</p>
 					</div>
 					<div class="about-grid">
 						<div class="panel reveal">
@@ -1524,25 +1606,34 @@
 			});
 		})();
 
-		/* 3D Tilt Effect for Cards on Mouse Move */
+		/* 3D Tilt Effect for Project Cards */
 		(function () {
+			const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+			const finePointer = window.matchMedia("(pointer: fine)").matches;
+			if (reduceMotion || !finePointer) return;
+
 			const cards = document.querySelectorAll(".work-card");
-			
 			cards.forEach((card) => {
 				card.addEventListener("mousemove", (e) => {
 					const rect = card.getBoundingClientRect();
-					const centerX = rect.width / 2;
-					const centerY = rect.height / 2;
-					const mouseX = e.clientX - rect.left;
-					const mouseY = e.clientY - rect.top;
-					const rotateX = (mouseY - centerY) / centerY * 10;
-					const rotateY = (centerX - mouseX) / centerX * 10;
-					
-					card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+					const x = (e.clientX - rect.left) / rect.width;
+					const y = (e.clientY - rect.top) / rect.height;
+					const rotateX = (0.5 - y) * 14;
+					const rotateY = (x - 0.5) * 16;
+
+					card.style.setProperty("--card-rx", `${rotateX.toFixed(2)}deg`);
+					card.style.setProperty("--card-ry", `${rotateY.toFixed(2)}deg`);
+					card.style.setProperty("--card-z", "16px");
+					card.style.setProperty("--card-gx", `${(x * 100).toFixed(1)}%`);
+					card.style.setProperty("--card-gy", `${(y * 100).toFixed(1)}%`);
 				});
-				
+
 				card.addEventListener("mouseleave", () => {
-					card.style.transform = "perspective(1200px) rotateX(0) rotateY(0) translateZ(0)";
+					card.style.setProperty("--card-rx", "0deg");
+					card.style.setProperty("--card-ry", "0deg");
+					card.style.setProperty("--card-z", "0px");
+					card.style.setProperty("--card-gx", "50%");
+					card.style.setProperty("--card-gy", "50%");
 				});
 			});
 		})();
@@ -1591,33 +1682,68 @@
 			meters.forEach((meter) => meterObserver.observe(meter));
 		})();
 
-		/* Enhanced Parallax for Sections */
+		/* Parallax Depth Hero */
 		(function () {
-			const sections = document.querySelectorAll("section");
-			
-			window.addEventListener("scroll", () => {
-				sections.forEach((section) => {
-					const rect = section.getBoundingClientRect();
-					const offset = window.scrollY;
-					const distance = rect.top + offset;
-					const parallax = (offset - distance) * 0.5;
-					
-					section.style.backgroundPosition = `0 ${parallax}px`;
+			const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+			const finePointer = window.matchMedia("(pointer: fine)").matches;
+			const hero = document.querySelector(".hero");
+			if (!hero || reduceMotion) return;
+
+			const heroText = hero.querySelector(".hero-text");
+			const heroPhoto = hero.querySelector(".hero-photo");
+			let rafId = null;
+			let mx = 0;
+			let my = 0;
+			let scrollProgress = 0;
+
+			function paint() {
+				rafId = null;
+				if (!heroText || !heroPhoto) return;
+				heroText.style.transform = `translate3d(${mx * 12}px, ${my * 12 - scrollProgress * 18}px, 36px)`;
+				heroPhoto.style.transform = `translate3d(${mx * -18}px, ${my * -18 + scrollProgress * 26}px, 64px) rotateY(${mx * -8}deg) rotateX(${my * 7}deg) scale(${1 - scrollProgress * 0.03})`;
+			}
+
+			if (finePointer) {
+				hero.addEventListener("mousemove", (e) => {
+					const rect = hero.getBoundingClientRect();
+					mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+					my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+					if (!rafId) rafId = requestAnimationFrame(paint);
 				});
-			});
+
+				hero.addEventListener("mouseleave", () => {
+					mx = 0;
+					my = 0;
+					if (!rafId) rafId = requestAnimationFrame(paint);
+				});
+			}
+
+			window.addEventListener("scroll", () => {
+				const rect = hero.getBoundingClientRect();
+				scrollProgress = Math.min(1, Math.max(0, -rect.top / Math.max(rect.height, 1)));
+				if (!rafId) rafId = requestAnimationFrame(paint);
+			}, { passive: true });
+
+			if (!rafId) rafId = requestAnimationFrame(paint);
 		})();
 
-		/* Cursor Following Elements */
+		/* 3D Section Transitions */
 		(function () {
-			const hero = document.querySelector(".hero");
-			if (!hero) return;
-			
-			window.addEventListener("mousemove", (e) => {
-				const x = e.clientX / window.innerWidth;
-				const y = e.clientY / window.innerHeight;
-				hero.style.setProperty("--cursor-x", x);
-				hero.style.setProperty("--cursor-y", y);
-			});
+			const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+			if (reduceMotion) return;
+
+			document.body.classList.add("js-effects-enabled");
+			const sections = document.querySelectorAll("main section");
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						entry.target.classList.toggle("in-view", entry.isIntersecting);
+					});
+				},
+				{ threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+			);
+
+			sections.forEach((section) => observer.observe(section));
 		})();
 	</script>
 </body>
