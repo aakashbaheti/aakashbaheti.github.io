@@ -11,3 +11,6 @@ https://developer.mozilla.org/en-US/docs/Learn/CSS
 https://stackoverflow.com/questions/72234434/how-do-i-solve-a-problem-with-a-css-file
 
 https://flatirons.com/blog/what-is-flask-overview-of-the-flask-python-framework-2024/
+
+https://www.youtube.com/watch?v=mi1I-xZeKIM
+
