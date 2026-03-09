@@ -229,6 +229,7 @@
 			scroll-margin-top: 90px;
 			perspective: 1400px;
 			transform-style: preserve-3d;
+			overflow: hidden;
 		}
 
 		.hero {
@@ -262,6 +263,11 @@
 		.hero-photo {
 			will-change: transform;
 			transform-style: preserve-3d;
+		}
+
+		.hero-text {
+			position: relative;
+			z-index: 3;
 		}
 
 		.hero-text .lead {
@@ -310,6 +316,8 @@
 			display: flex;
 			flex-wrap: wrap;
 			gap: 12px;
+			position: relative;
+			z-index: 5;
 		}
 
 		.btn {
@@ -363,6 +371,9 @@
 			border-radius: 50% / 45%;
 			display: block;
 			margin: 0 auto;
+			position: relative;
+			z-index: 1;
+			pointer-events: none;
 			box-shadow: 
 				0 0 40px rgba(241, 48, 36, 0.3),
 				0 0 80px rgba(241, 48, 36, 0.15),
@@ -408,6 +419,8 @@
 			max-width: 1140px;
 			margin: 0 auto;
 			padding: 86px 18px;
+			position: relative;
+			z-index: 3;
 		}
 
 		.section-head {
@@ -447,6 +460,8 @@
 			background: rgba(255, 255, 255, 0.06);
 			backdrop-filter: blur(10px);
 			padding: 18px;
+			position: relative;
+			z-index: 2;
 		}
 
 		.skills-list {
@@ -594,6 +609,9 @@
 
 		.work-card {
 			position: relative;
+			display: block;
+			z-index: 3;
+			isolation: isolate;
 			border-radius: 14px;
 			overflow: hidden;
 			border: 1px solid var(--border);
@@ -654,6 +672,7 @@
 			justify-content: flex-end;
 			padding: 14px;
 			background: linear-gradient(185deg, rgba(0, 0, 0, 0.05) 35%, rgba(19, 20, 36, 0.92));
+			pointer-events: none;
 		}
 
 		.work-overlay,
@@ -663,11 +682,26 @@
 		}
 
 		.js-effects-enabled section:not(.hero) .section-wrap {
+			--section-shift: 34px;
+			--section-tilt: 10deg;
+			--section-yaw: 0deg;
 			opacity: 0;
-			transform: translateY(34px) rotateX(10deg) scale(0.97);
+			transform: translateY(var(--section-shift)) rotateX(var(--section-tilt)) rotateY(var(--section-yaw)) scale(0.97);
 			transform-origin: top center;
 			filter: blur(3px);
 			transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.75s ease, filter 0.75s ease;
+		}
+
+		.js-effects-enabled section.fx-from-next:not(.hero) .section-wrap {
+			--section-shift: 42px;
+			--section-tilt: 11deg;
+			--section-yaw: -2deg;
+		}
+
+		.js-effects-enabled section.fx-from-prev:not(.hero) .section-wrap {
+			--section-shift: -42px;
+			--section-tilt: -11deg;
+			--section-yaw: 2deg;
 		}
 
 		.js-effects-enabled section.in-view:not(.hero) .section-wrap {
@@ -729,6 +763,9 @@
 		.contact-list a {
 			color: var(--text-main);
 			text-decoration: none;
+			position: relative;
+			z-index: 5;
+			pointer-events: auto;
 		}
 
 		.contact-list a:hover {
@@ -997,10 +1034,18 @@
 				transform: none;
 			}
 
-			.js-effects-enabled section .section-wrap {
-				opacity: 1;
-				filter: none;
-				transform: none;
+			.js-effects-enabled section.fx-from-next:not(.hero) .section-wrap {
+				--section-shift: 24px;
+				--section-tilt: 6deg;
+				--section-yaw: -1deg;
+				filter: blur(1.5px);
+			}
+
+			.js-effects-enabled section.fx-from-prev:not(.hero) .section-wrap {
+				--section-shift: -24px;
+				--section-tilt: -6deg;
+				--section-yaw: 1deg;
+				filter: blur(1.5px);
 			}
 		}
 
@@ -1733,14 +1778,31 @@
 			if (reduceMotion) return;
 
 			document.body.classList.add("js-effects-enabled");
-			const sections = document.querySelectorAll("main section");
+			const sections = document.querySelectorAll("main section:not(.hero)");
+			sections.forEach((section) => {
+				section.classList.add("fx-from-next");
+			});
+
 			const observer = new IntersectionObserver(
 				(entries) => {
 					entries.forEach((entry) => {
-						entry.target.classList.toggle("in-view", entry.isIntersecting);
+						if (entry.isIntersecting) {
+							entry.target.classList.add("in-view");
+							entry.target.classList.remove("fx-from-next", "fx-from-prev");
+							return;
+						}
+
+						entry.target.classList.remove("in-view");
+						if (entry.boundingClientRect.top < 0) {
+							entry.target.classList.add("fx-from-prev");
+							entry.target.classList.remove("fx-from-next");
+						} else {
+							entry.target.classList.add("fx-from-next");
+							entry.target.classList.remove("fx-from-prev");
+						}
 					});
 				},
-				{ threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+				{ threshold: 0.22, rootMargin: "-8% 0px -8% 0px" }
 			);
 
 			sections.forEach((section) => observer.observe(section));
