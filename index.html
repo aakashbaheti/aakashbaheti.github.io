@@ -239,6 +239,10 @@
 			padding: 56px 18px;
 		}
 
+		#experience {
+			overflow: visible;
+		}
+
 		.hero-grid {
 			max-width: 1140px;
 			margin: 0 auto;
@@ -573,6 +577,292 @@
 			font-size: 0.9rem;
 		}
 
+		.experience-timeline {
+			position: relative;
+			display: grid;
+			gap: 18px;
+			padding: 8px 0;
+			overflow: visible;
+		}
+
+		.experience-timeline::before {
+			content: "";
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			top: 8px;
+			bottom: 8px;
+			width: 3px;
+			border-radius: 999px;
+			background: linear-gradient(180deg, rgba(241, 48, 36, 0.9), rgba(241, 48, 36, 0.2));
+			box-shadow: 0 0 18px rgba(241, 48, 36, 0.2);
+		}
+
+		.experience-item {
+			position: relative;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 86px minmax(0, 1fr);
+			gap: 14px;
+			padding: 0;
+			border-left: 0;
+			align-items: center;
+			overflow: visible;
+			min-height: 56px;
+		}
+
+		.experience-item::before {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 20px;
+			width: 10px;
+			height: 10px;
+			transform: translateX(-50%);
+			border-radius: 50%;
+			background: rgba(241, 48, 36, 0.95);
+			box-shadow: 0 0 0 5px rgba(241, 48, 36, 0.15);
+			transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+		}
+
+		.experience-logo {
+			grid-column: 2;
+			justify-self: center;
+			position: relative;
+			z-index: 2;
+			width: 56px;
+			height: 56px;
+			border-radius: 50%;
+			border: 2px solid rgba(255, 255, 255, 0.28);
+			background: linear-gradient(155deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+			display: grid;
+			place-items: center;
+			box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26), 0 0 0 7px rgba(241, 48, 36, 0.1);
+			cursor: pointer;
+			padding: 0;
+			outline: none;
+			transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+		}
+
+		.experience-logo img {
+			width: 28px;
+			height: 28px;
+			object-fit: contain;
+			filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+		}
+
+		.experience-logo.logo-perplexity img,
+		.experience-logo.logo-meta img,
+		.experience-logo.logo-reworld img,
+		.experience-logo.logo-uw img,
+		.experience-logo.logo-bloomz img {
+			width: 32px;
+			height: 32px;
+			border-radius: 9px;
+		}
+
+		.experience-logo.logo-bloomz img {
+			width: 34px;
+			height: 34px;
+			border-radius: 10px;
+			box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+		}
+
+		.experience-logo .logo-text {
+			font-size: 0.9rem;
+			font-weight: 800;
+			letter-spacing: 0.03em;
+			color: #fff;
+			display: none;
+		}
+
+		.experience-logo.show-fallback .logo-text {
+			display: block;
+		}
+
+		.logo-perplexity {
+			background: linear-gradient(155deg, #1c1f2d, #0d0f17);
+		}
+
+		.logo-meta {
+			background: linear-gradient(155deg, #0c1c35, #133c8a);
+		}
+
+		.logo-tmobile {
+			background: linear-gradient(155deg, #5e0735, #e20074);
+		}
+
+		.logo-reworld {
+			background: linear-gradient(155deg, #113c2c, #2d9668);
+		}
+
+		.logo-boa {
+			background: linear-gradient(155deg, #8f1028, #144c9c);
+		}
+
+		.logo-uw {
+			background: linear-gradient(155deg, #2d1846, #5a2ca0);
+		}
+
+		.logo-bloomz {
+			background: radial-gradient(circle at 30% 30%, #6fe2ff, #2f9fe4 55%, #1e5cb8 100%);
+		}
+
+		.logo-reworld .logo-text {
+			font-size: 0.7rem;
+			letter-spacing: 0.08em;
+		}
+
+		.logo-uw .logo-text {
+			font-size: 1.15rem;
+			font-weight: 900;
+			color: #e8d7a8;
+		}
+
+		.logo-bloomz::before {
+			content: "";
+			position: absolute;
+			inset: 8px;
+			border-radius: 16px;
+			background: rgba(255, 255, 255, 0.18);
+			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+		}
+
+		.logo-bloomz img,
+		.logo-bloomz .logo-text {
+			position: relative;
+			z-index: 1;
+		}
+
+		.experience-body {
+			grid-column: 1;
+			justify-self: end;
+			position: relative;
+			max-width: 520px;
+			border: 1px solid var(--border);
+			border-radius: 18px;
+			background: rgba(255, 255, 255, 0.05);
+			padding: 0 18px;
+			box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
+			transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease, max-height 0.35s ease, padding 0.35s ease, margin-top 0.35s ease;
+			overflow: hidden;
+			max-height: 0;
+			opacity: 0;
+			transform: translateY(-4px) scale(0.985);
+			pointer-events: none;
+			margin-top: 0;
+		}
+
+		.experience-item:nth-child(even) .experience-body {
+			grid-column: 3;
+			justify-self: start;
+		}
+
+		.experience-body::after {
+			content: "";
+			position: absolute;
+			top: 26px;
+			right: -20px;
+			left: auto;
+			width: 20px;
+			height: 2px;
+			background: rgba(241, 48, 36, 0.45);
+			opacity: 0;
+			transition: opacity 0.25s ease;
+		}
+
+		.experience-item:nth-child(even) .experience-body::after {
+			left: -20px;
+			right: auto;
+		}
+
+		.experience-item.is-open::before,
+		.experience-timeline.show-all .experience-item::before {
+			transform: translateX(-50%) scale(1.16);
+			background: rgba(241, 48, 36, 0.92);
+			box-shadow: 0 0 0 7px rgba(241, 48, 36, 0.15), 0 0 14px rgba(241, 48, 36, 0.45);
+		}
+
+		.experience-logo:hover,
+		.experience-logo:focus-visible,
+		.experience-item.is-open .experience-logo,
+		.experience-timeline.show-all .experience-logo {
+			transform: translateY(-1px) scale(1.05);
+			border-color: rgba(241, 48, 36, 0.58);
+			box-shadow: 0 0 0 4px rgba(241, 48, 36, 0.15), 0 10px 24px rgba(0, 0, 0, 0.24);
+		}
+
+		.experience-item.is-open .experience-body,
+		.experience-timeline.show-all .experience-body {
+			transform: translateY(0) scale(1);
+			border-color: rgba(241, 48, 36, 0.35);
+			box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+			opacity: 1;
+			max-height: 460px;
+			pointer-events: auto;
+			padding: 16px 18px;
+			margin-top: 6px;
+		}
+
+		.experience-timeline.interaction-lock .experience-logo {
+			pointer-events: none;
+		}
+
+		.experience-item.is-open .experience-body::after,
+		.experience-timeline.show-all .experience-body::after {
+			opacity: 1;
+		}
+
+		.experience-body .date {
+			display: inline-flex;
+			align-items: center;
+			padding: 5px 10px;
+			border-radius: 999px;
+			background: rgba(241, 48, 36, 0.13);
+			border: 1px solid rgba(241, 48, 36, 0.22);
+			margin-bottom: 10px;
+		}
+
+		.experience-body h3 {
+			margin: 0 0 8px;
+			font-size: 1.05rem;
+		}
+
+		.experience-body p {
+			margin: 0;
+		}
+
+		.experience-controls {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 12px;
+		}
+
+		.experience-toggle {
+			border: 1px solid var(--border);
+			background: rgba(0, 0, 0, 0.22);
+			color: var(--text-main);
+			padding: 9px 13px;
+			border-radius: 999px;
+			font-size: 0.82rem;
+			font-weight: 700;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+			cursor: pointer;
+			transition: border-color 0.24s ease, transform 0.24s ease, box-shadow 0.24s ease;
+		}
+
+		.experience-toggle:hover,
+		.experience-toggle:focus-visible {
+			transform: translateY(-1px);
+			border-color: rgba(241, 48, 36, 0.62);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.24);
+		}
+
+		.experience-panel.show-all .experience-toggle {
+			border-color: rgba(241, 48, 36, 0.6);
+			background: rgba(241, 48, 36, 0.12);
+		}
+
 		.course-grid {
 			display: grid;
 			grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -647,11 +937,30 @@
 			cursor: pointer;
 		}
 
+		.work-card-inner {
+			position: absolute;
+			inset: 0;
+			transform-style: preserve-3d;
+			transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+		}
+
+		.work-card:hover .work-card-inner,
+		.work-card:focus-visible .work-card-inner {
+			transform: rotateY(180deg);
+		}
+
+		.work-face {
+			position: absolute;
+			inset: 0;
+			backface-visibility: hidden;
+			-webkit-backface-visibility: hidden;
+		}
+
 		.work-card::after {
 			content: "";
 			position: absolute;
 			inset: 0;
-			background: radial-gradient(circle at var(--card-gx) var(--card-gy), rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 55%);
+			background: radial-gradient(circle at var(--card-gx) var(--card-gy), rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 42%);
 			opacity: 0;
 			transition: opacity 0.22s ease;
 			pointer-events: none;
@@ -665,10 +974,10 @@
 		}
 
 		.work-card:hover::after {
-			opacity: 1;
+			opacity: 0.45;
 		}
 
-		.work-card img {
+		.work-front img {
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
@@ -676,7 +985,7 @@
 			transition: transform 0.55s ease;
 		}
 
-		.work-card:hover img {
+		.work-card:hover .work-front img {
 			transform: scale(1.07);
 		}
 
@@ -691,9 +1000,63 @@
 			pointer-events: none;
 		}
 
+		.work-front .work-overlay p {
+			display: none;
+		}
+
+		.work-back {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			padding: 18px;
+			background: linear-gradient(155deg, rgba(20, 21, 39, 0.98), rgba(47, 20, 33, 0.98));
+			transform: rotateY(180deg);
+		}
+
+		.work-back img {
+			position: absolute;
+			inset: -8%;
+			width: 116%;
+			height: 116%;
+			object-fit: cover;
+			filter: blur(7px) saturate(0.9);
+			transform: scale(1.08);
+			opacity: 0.42;
+			pointer-events: none;
+		}
+
+		.work-back::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background:
+				radial-gradient(circle at top right, rgba(241, 48, 36, 0.24), transparent 42%),
+				linear-gradient(180deg, rgba(10, 12, 24, 0.22), rgba(10, 12, 24, 0.72));
+			pointer-events: none;
+		}
+
+		.work-back-content {
+			position: relative;
+			z-index: 1;
+		}
+
+		.work-back h3 {
+			margin: 0 0 10px;
+			font-size: 1rem;
+			line-height: 1.35;
+		}
+
+		.work-back p {
+			margin: 0;
+			color: rgba(245, 247, 255, 0.84);
+			font-size: 0.86rem;
+			line-height: 1.6;
+		}
+
 		.work-overlay,
 		.work-overlay h3,
-		.work-overlay p {
+		.work-overlay p,
+		.work-back-content {
 			transform: translateZ(26px);
 		}
 
@@ -731,6 +1094,13 @@
 
 		.js-effects-enabled section.in-view:nth-of-type(even):not(.hero) .section-wrap {
 			transform: translateY(0) rotateX(0deg) rotateY(-1deg) scale(1);
+		}
+
+		/* Keep Experience always visible to avoid anchor-load hidden state */
+		.js-effects-enabled #experience .section-wrap {
+			opacity: 1 !important;
+			filter: none !important;
+			transform: none !important;
 		}
 
 		.work-overlay h3 {
@@ -1043,12 +1413,65 @@
 				grid-template-columns: 1fr;
 			}
 
+			.experience-item {
+				grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr);
+				gap: 14px;
+				padding-left: 0;
+			}
+
+			.experience-timeline::before {
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			.experience-item::before {
+				left: 50%;
+				top: 18px;
+			}
+
+			.experience-logo {
+				grid-column: 2;
+				width: 50px;
+				height: 50px;
+			}
+
+			.experience-body,
+			.experience-item:nth-child(even) .experience-body {
+				grid-column: 1;
+				justify-self: end;
+				max-width: none;
+			}
+
+			.experience-item:nth-child(even) .experience-body {
+				grid-column: 3;
+				justify-self: start;
+			}
+
+			.experience-body::after,
+			.experience-item:nth-child(even) .experience-body::after {
+				width: 16px;
+			}
+
+			.experience-body::after {
+				right: -16px;
+				left: auto;
+			}
+
+			.experience-item:nth-child(even) .experience-body::after {
+				left: -16px;
+				right: auto;
+			}
+
 			.side-nav {
 				display: none;
 			}
 
 			.work-card {
 				transform: none;
+			}
+
+			.work-card-inner {
+				transform: none !important;
 			}
 
 			.js-effects-enabled section.fx-from-next:not(.hero) .section-wrap {
@@ -1100,6 +1523,48 @@
 
 			.hero-card {
 				padding: 14px;
+			}
+
+			.experience-item {
+				grid-template-columns: 1fr;
+				gap: 10px;
+				padding-left: 24px;
+				min-height: 42px;
+			}
+
+			.experience-timeline::before {
+				left: 12px;
+				transform: none;
+			}
+
+			.experience-item::before {
+				left: 12px;
+				top: 18px;
+			}
+
+			.experience-logo {
+				grid-column: 1;
+				justify-self: start;
+				width: 44px;
+				height: 44px;
+			}
+
+			.experience-body,
+			.experience-item:nth-child(even) .experience-body {
+				grid-column: 1;
+				justify-self: stretch;
+				margin-left: 22px;
+			}
+
+			.experience-body::after,
+			.experience-item:nth-child(even) .experience-body::after {
+				left: -14px;
+				right: auto;
+				width: 14px;
+			}
+
+			.experience-controls {
+				justify-content: flex-start;
 			}
 		}
 	</style>
@@ -1375,63 +1840,151 @@
 				<div class="section-wrap">
 					<div class="section-head reveal">
 						<h2>Featured <span class="accent">Projects</span></h2>
-						<p>A selected set of projects in AI/ML, full-stack engineering, data systems, and applied analytics.</p>
+						<p>A selected set of projects in AI/ML, full-stack engineering, data systems, and applied analytics. Click any project card to see more.</p>
 					</div>
 					<div class="work-grid">
 						<a class="work-card reveal" href="https://github.com/aakashbaheti/multimodal-rag" target="_blank" rel="noreferrer noopener">
-							<img src="images/proj_7.jpg" alt="Multimodal Enterprise RAG System">
-							<div class="work-overlay">
-								<h3>Multimodal Enterprise RAG</h3>
-								<p>Hybrid retrieval across PDFs, images, audio, and video with graph-enhanced context.</p>
+							<div class="work-card-inner">
+								<div class="work-face work-front">
+									<img src="images/proj_7.jpg" alt="Multimodal Enterprise RAG System">
+									<div class="work-overlay">
+										<h3>Multimodal Enterprise RAG</h3>
+										<p>Hybrid retrieval across PDFs, images, audio, and video with graph-enhanced context.</p>
+									</div>
+								</div>
+								<div class="work-face work-back">
+									<img src="images/proj_7.jpg" alt="" aria-hidden="true">
+									<div class="work-back-content">
+										<h3>Multimodal Enterprise RAG</h3>
+										<p>Hybrid retrieval across PDFs, images, audio, and video with graph-enhanced context.</p>
+									</div>
+								</div>
 							</div>
 						</a>
 						<a class="work-card reveal" href="https://github.com/aakashbaheti/Webcam-Eye-Tracker" target="_blank" rel="noreferrer noopener">
-							<img src="images/proj_8.jpg" alt="Webcam Eye Tracker">
-							<div class="work-overlay">
-								<h3>Webcam Eye Tracker</h3>
-								<p>Browser-based gaze approximation with calibration and heatmap visualization.</p>
+							<div class="work-card-inner">
+								<div class="work-face work-front">
+									<img src="images/proj_8.jpg" alt="Webcam Eye Tracker">
+									<div class="work-overlay">
+										<h3>Webcam Eye Tracker</h3>
+										<p>Browser-based gaze approximation with calibration and heatmap visualization.</p>
+									</div>
+								</div>
+								<div class="work-face work-back">
+									<img src="images/proj_8.jpg" alt="" aria-hidden="true">
+									<div class="work-back-content">
+										<h3>Webcam Eye Tracker</h3>
+										<p>Browser-based gaze approximation with calibration and heatmap visualization.</p>
+									</div>
+								</div>
 							</div>
 						</a>
 						<a class="work-card reveal" href="https://github.com/aakashbaheti/Face-Recognition" target="_blank" rel="noreferrer noopener">
-							<img src="images/proj_1.jpg" alt="Face Recognition Software">
-							<div class="work-overlay">
-								<h3>Face Recognition System</h3>
-								<p>Real-time webcam matching with confidence score visualization.</p>
+							<div class="work-card-inner">
+								<div class="work-face work-front">
+									<img src="images/proj_1.jpg" alt="Face Recognition Software">
+									<div class="work-overlay">
+										<h3>Face Recognition System</h3>
+										<p>Real-time webcam matching with confidence score visualization.</p>
+									</div>
+								</div>
+								<div class="work-face work-back">
+									<img src="images/proj_1.jpg" alt="" aria-hidden="true">
+									<div class="work-back-content">
+										<h3>Face Recognition System</h3>
+										<p>Real-time webcam matching with confidence score visualization.</p>
+									</div>
+								</div>
 							</div>
 						</a>
 						<a class="work-card reveal" href="https://github.com/aakashbaheti/Spotify-Database-Implementation-Mock" target="_blank" rel="noreferrer noopener">
-							<img src="images/proj_3.jpg" alt="Spotify Database System">
-							<div class="work-overlay">
-								<h3>Spotify Database</h3>
-								<p>SQL schema and analytical queries for behavior and demographic insights.</p>
+							<div class="work-card-inner">
+								<div class="work-face work-front">
+									<img src="images/proj_3.jpg" alt="Spotify Database System">
+									<div class="work-overlay">
+										<h3>Spotify Database</h3>
+										<p>SQL schema and analytical queries for behavior and demographic insights.</p>
+									</div>
+								</div>
+								<div class="work-face work-back">
+									<img src="images/proj_3.jpg" alt="" aria-hidden="true">
+									<div class="work-back-content">
+										<h3>Spotify Database</h3>
+										<p>SQL schema and analytical queries for behavior and demographic insights.</p>
+									</div>
+								</div>
 							</div>
 						</a>
 						<a class="work-card reveal" href="https://github.com/aakashbaheti/Movie-Recommendation-System" target="_blank" rel="noreferrer noopener">
-							<img src="images/proj_6.png" alt="Movie Recommendation System">
-							<div class="work-overlay">
-								<h3>Movie Recommender</h3>
-								<p>ML-powered recommendation engine based on preference similarity.</p>
+							<div class="work-card-inner">
+								<div class="work-face work-front">
+									<img src="images/proj_6.png" alt="Movie Recommendation System">
+									<div class="work-overlay">
+										<h3>Movie Recommender</h3>
+										<p>ML-powered recommendation engine based on preference similarity.</p>
+									</div>
+								</div>
+								<div class="work-face work-back">
+									<img src="images/proj_6.png" alt="" aria-hidden="true">
+									<div class="work-back-content">
+										<h3>Movie Recommender</h3>
+										<p>ML-powered recommendation engine based on preference similarity.</p>
+									</div>
+								</div>
 							</div>
 						</a>
 						<a class="work-card reveal" href="https://github.com/aakashbaheti/aakashbaheti.github.io" target="_blank" rel="noreferrer noopener">
-							<img src="images/proj_4.jpg" alt="Portfolio Website">
-							<div class="work-overlay">
-								<h3>Portfolio Website</h3>
-								<p>Design and implementation of a high-impact personal web presence.</p>
+							<div class="work-card-inner">
+								<div class="work-face work-front">
+									<img src="images/proj_4.jpg" alt="Portfolio Website">
+									<div class="work-overlay">
+										<h3>Portfolio Website</h3>
+										<p>Design and implementation of a high-impact personal web presence.</p>
+									</div>
+								</div>
+								<div class="work-face work-back">
+									<img src="images/proj_4.jpg" alt="" aria-hidden="true">
+									<div class="work-back-content">
+										<h3>Portfolio Website</h3>
+										<p>Design and implementation of a high-impact personal web presence.</p>
+									</div>
+								</div>
 							</div>
 						</a>
 						<a class="work-card reveal" href="https://www.t-mobile.com/responsibility/community/education/changemaker-challenge" target="_blank" rel="noreferrer noopener">
-							<img src="images/proj_2.jpg" alt="T-Mobile Changemakers Challenge">
-							<div class="work-overlay">
-								<h3>T-Mobile Changemakers</h3>
-								<p>Top-5 nationwide project blending AI and prosthetics to support adaptive athletics.</p>
+							<div class="work-card-inner">
+								<div class="work-face work-front">
+									<img src="images/proj_2.jpg" alt="T-Mobile Changemakers Challenge">
+									<div class="work-overlay">
+										<h3>T-Mobile Changemakers</h3>
+										<p>Top-5 nationwide project blending AI and prosthetics to support adaptive athletics.</p>
+									</div>
+								</div>
+								<div class="work-face work-back">
+									<img src="images/proj_2.jpg" alt="" aria-hidden="true">
+									<div class="work-back-content">
+										<h3>T-Mobile Changemakers</h3>
+										<p>Top-5 nationwide project blending AI and prosthetics to support adaptive athletics.</p>
+									</div>
+								</div>
 							</div>
 						</a>
 						<a class="work-card reveal" href="https://github.com/aakashbaheti/Merge-and-Reshape-Data-Visualization" target="_blank" rel="noreferrer noopener">
-							<img src="images/proj_5.jpg" alt="Merge and Reshape Data Visualization">
-							<div class="work-overlay">
-								<h3>Climate Data Visualization</h3>
-								<p>R-based climate analysis of CO2 trends, global temperature signals, and related visual insights.</p>
+							<div class="work-card-inner">
+								<div class="work-face work-front">
+									<img src="images/proj_5.jpg" alt="Merge and Reshape Data Visualization">
+									<div class="work-overlay">
+										<h3>Climate Data Visualization</h3>
+										<p>R-based climate analysis of CO2 trends, global temperature signals, and related visual insights.</p>
+									</div>
+								</div>
+								<div class="work-face work-back">
+									<img src="images/proj_5.jpg" alt="" aria-hidden="true">
+									<div class="work-back-content">
+										<h3>Climate Data Visualization</h3>
+										<p>R-based climate analysis of CO2 trends, global temperature signals, and related visual insights.</p>
+									</div>
+								</div>
 							</div>
 						</a>
 					</div>
