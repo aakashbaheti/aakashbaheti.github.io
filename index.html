@@ -481,6 +481,22 @@
 			color: var(--text-muted);
 		}
 
+		.lang-label {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			color: #fff;
+			font-weight: 600;
+		}
+
+		.lang-icon {
+			width: 16px;
+			height: 16px;
+			border-radius: 3px;
+			object-fit: contain;
+			filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+		}
+
 		.meter {
 			height: 8px;
 			background: rgba(255, 255, 255, 0.12);
@@ -944,16 +960,17 @@
 		/* Skill Meter Animation */
 		.meter span {
 			animation: fillMeter 1s ease-out forwards;
-			transform-origin: left;
+			transform-origin: left center;
+			transform: scaleX(0);
 		}
 
 		@keyframes fillMeter {
 			from {
-				width: 0 !important;
+				transform: scaleX(0);
 				opacity: 0.5;
 			}
 			to {
-				width: inherit !important;
+				transform: scaleX(1);
 				opacity: 1;
 			}
 		}
@@ -1167,47 +1184,47 @@
 							<h3>Programming Languages</h3>
 							<div class="skills-list">
 								<div class="skill-row">
-									<div class="skill-title"><span>SQL</span><span>100%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="SQL icon">SQL</span><span>100%</span></div>
 									<div class="meter"><span style="width:100%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>Python</span><span>100%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python icon">Python</span><span>100%</span></div>
 									<div class="meter"><span style="width:100%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>Java</span><span>100%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java icon">Java</span><span>100%</span></div>
 									<div class="meter"><span style="width:100%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>PHP</span><span>100%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP icon">PHP</span><span>100%</span></div>
 									<div class="meter"><span style="width:100%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>HTML</span><span>95%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML icon">HTML</span><span>95%</span></div>
 									<div class="meter"><span style="width:95%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>CSS</span><span>95%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS icon">CSS</span><span>95%</span></div>
 									<div class="meter"><span style="width:95%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>JavaScript</span><span>90%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript icon">JavaScript</span><span>90%</span></div>
 									<div class="meter"><span style="width:90%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>TypeScript</span><span>90%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript icon">TypeScript</span><span>90%</span></div>
 									<div class="meter"><span style="width:90%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>React</span><span>87%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React icon">React</span><span>87%</span></div>
 									<div class="meter"><span style="width:87%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>GraphQL</span><span>87%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg" alt="GraphQL icon">GraphQL</span><span>87%</span></div>
 									<div class="meter"><span style="width:87%"></span></div>
 								</div>
 								<div class="skill-row">
-									<div class="skill-title"><span>C#</span><span>80%</span></div>
+									<div class="skill-title"><span class="lang-label"><img class="lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C# icon">C#</span><span>80%</span></div>
 									<div class="meter"><span style="width:80%"></span></div>
 								</div>
 							</div>
@@ -1553,6 +1570,11 @@
 			const particles = [];
 			let width = 0;
 			let height = 0;
+			const cursor = {
+				x: 0,
+				y: 0,
+				active: false
+			};
 
 			function resize() {
 				width = canvas.width = window.innerWidth;
@@ -1565,7 +1587,9 @@
 					y: Math.random() * height,
 					vx: (Math.random() - 0.5) * 0.45,
 					vy: (Math.random() - 0.5) * 0.45,
-					size: Math.random() * 2.2 + 0.5
+					size: Math.random() * 2.2 + 0.5,
+					offsetX: 0,
+					offsetY: 0
 				};
 			}
 
@@ -1588,21 +1612,45 @@
 					if (p.x < 0 || p.x > width) p.vx *= -1;
 					if (p.y < 0 || p.y > height) p.vy *= -1;
 
+					if (cursor.active) {
+						const dxCursor = cursor.x - p.x;
+						const dyCursor = cursor.y - p.y;
+						const distance = Math.hypot(dxCursor, dyCursor);
+						const influenceRadius = 220;
+
+						if (distance < influenceRadius) {
+							const force = (1 - distance / influenceRadius) * 18;
+							p.offsetX += ((dxCursor / Math.max(distance, 1)) * force - p.offsetX) * 0.08;
+							p.offsetY += ((dyCursor / Math.max(distance, 1)) * force - p.offsetY) * 0.08;
+						} else {
+							p.offsetX *= 0.92;
+							p.offsetY *= 0.92;
+						}
+					} else {
+						p.offsetX *= 0.92;
+						p.offsetY *= 0.92;
+					}
+
+					const drawX = p.x + p.offsetX;
+					const drawY = p.y + p.offsetY;
+
 					ctx.beginPath();
-					ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+					ctx.arc(drawX, drawY, p.size, 0, Math.PI * 2);
 					ctx.fillStyle = "rgba(230, 142, 46, 0.7)";
 					ctx.fill();
 
 					for (let j = i + 1; j < particles.length; j += 1) {
 						const q = particles[j];
-						const dx = p.x - q.x;
-						const dy = p.y - q.y;
+						const qx = q.x + q.offsetX;
+						const qy = q.y + q.offsetY;
+						const dx = drawX - qx;
+						const dy = drawY - qy;
 						const dist = Math.hypot(dx, dy);
 						if (dist < 135) {
 							const alpha = (1 - dist / 135) * 0.28;
 							ctx.beginPath();
-							ctx.moveTo(p.x, p.y);
-							ctx.lineTo(q.x, q.y);
+							ctx.moveTo(drawX, drawY);
+							ctx.lineTo(qx, qy);
 							ctx.strokeStyle = `rgba(245, 211, 147, ${alpha})`;
 							ctx.lineWidth = 1;
 							ctx.stroke();
@@ -1612,6 +1660,16 @@
 
 				requestAnimationFrame(draw);
 			}
+
+			window.addEventListener("mousemove", (event) => {
+				cursor.x = event.clientX;
+				cursor.y = event.clientY;
+				cursor.active = true;
+			}, { passive: true });
+
+			window.addEventListener("mouseleave", () => {
+				cursor.active = false;
+			});
 
 			window.addEventListener("resize", () => {
 				resize();
